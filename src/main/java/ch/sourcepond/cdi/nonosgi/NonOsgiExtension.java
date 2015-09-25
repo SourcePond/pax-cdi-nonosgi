@@ -53,10 +53,12 @@ public class NonOsgiExtension implements Extension {
 	 * @param event
 	 */
 	public <T> void processInjectionTarget(@Observes final ProcessInjectionTarget<T> event) {
+		LOG.debug("processInjectionTarget");
+
 		for (final InjectionPoint ip : event.getInjectionTarget().getInjectionPoints()) {
 			final OsgiService qualifier = ip.getAnnotated().getAnnotation(OsgiService.class);
 			if (qualifier != null) {
-				registry.addDependency(ip);
+				registry.addDependency(qualifier, ip);
 			}
 		}
 	}
