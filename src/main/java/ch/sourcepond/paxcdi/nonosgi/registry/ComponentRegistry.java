@@ -1,4 +1,4 @@
-package ch.sourcepond.cdi.nonosgi.registry;
+package ch.sourcepond.paxcdi.nonosgi.registry;
 
 import java.util.Collection;
 

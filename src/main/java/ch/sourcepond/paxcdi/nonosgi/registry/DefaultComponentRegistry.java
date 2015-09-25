@@ -1,4 +1,4 @@
-package ch.sourcepond.cdi.nonosgi.registry;
+package ch.sourcepond.paxcdi.nonosgi.registry;
 
 import static com.google.common.collect.HashMultimap.create;
 import static org.osgi.framework.FrameworkUtil.createFilter;
@@ -33,7 +33,7 @@ final class DefaultComponentRegistry implements ComponentRegistry {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * ch.sourcepond.cdi.nonosgi.registry.ComponentRegistry#addComponent(javax.
+	 * ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#addComponent(javax.
 	 * enterprise.inject.spi.Bean, org.ops4j.pax.cdi.api.Properties)
 	 */
 	@Override
@@ -53,7 +53,7 @@ final class DefaultComponentRegistry implements ComponentRegistry {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * ch.sourcepond.cdi.nonosgi.registry.ComponentRegistry#addDependency(javax.
+	 * ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#addDependency(javax.
 	 * enterprise.inject.spi.InjectionPoint)
 	 */
 	@Override
@@ -83,7 +83,7 @@ final class DefaultComponentRegistry implements ComponentRegistry {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * ch.sourcepond.cdi.nonosgi.registry.ComponentRegistry#resolveDependencies(
+	 * ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#resolveDependencies(
 	 * )
 	 */
 	@Override
@@ -104,7 +104,7 @@ final class DefaultComponentRegistry implements ComponentRegistry {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see ch.sourcepond.cdi.nonosgi.registry.ComponentRegistry#getExceptions()
+	 * @see ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#getExceptions()
 	 */
 	@Override
 	public Collection<Exception> getExceptions() {

@@ -1,4 +1,4 @@
-package ch.sourcepond.cdi.nonosgi;
+package ch.sourcepond.paxcdi.nonosgi;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -16,7 +16,7 @@ import org.ops4j.pax.cdi.api.OsgiServiceProvider;
 import org.ops4j.pax.cdi.api.Properties;
 import org.slf4j.Logger;
 
-import ch.sourcepond.cdi.nonosgi.registry.ComponentRegistry;
+import ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry;
 
 /**
  * @author rolandhauser
