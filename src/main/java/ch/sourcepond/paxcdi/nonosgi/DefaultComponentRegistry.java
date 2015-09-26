@@ -1,4 +1,4 @@
-package ch.sourcepond.paxcdi.nonosgi.registry;
+package ch.sourcepond.paxcdi.nonosgi;
 
 import static com.google.common.collect.HashMultimap.create;
 import static org.osgi.framework.FrameworkUtil.createFilter;

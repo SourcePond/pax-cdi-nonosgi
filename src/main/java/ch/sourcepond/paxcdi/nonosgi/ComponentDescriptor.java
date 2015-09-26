@@ -1,4 +1,4 @@
-package ch.sourcepond.paxcdi.nonosgi.registry;
+package ch.sourcepond.paxcdi.nonosgi;
 
 import java.util.Map;
 

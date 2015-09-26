@@ -16,8 +16,6 @@ import org.ops4j.pax.cdi.api.OsgiServiceProvider;
 import org.ops4j.pax.cdi.api.Properties;
 import org.slf4j.Logger;
 
-import ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry;
-
 /**
  * @author rolandhauser
  *
@@ -29,7 +27,14 @@ public class NonOsgiExtension implements Extension {
 	/**
 	 * @param pRegistry
 	 */
-	public NonOsgiExtension(final ComponentRegistry pRegistry) {
+	public NonOsgiExtension() {
+		this(new DefaultComponentRegistry());
+	}
+
+	/**
+	 * @param pRegistry
+	 */
+	NonOsgiExtension(final ComponentRegistry pRegistry) {
 		registry = pRegistry;
 	}
 
@@ -72,6 +77,10 @@ public class NonOsgiExtension implements Extension {
 
 		for (final Bean<?> beanToRegister : registry.resolveDependencies()) {
 			event.addBean(beanToRegister);
+		}
+
+		for (final Exception e : registry.getExceptions()) {
+			event.addDefinitionError(e);
 		}
 	}
 }
