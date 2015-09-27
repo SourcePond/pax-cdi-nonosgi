@@ -1,6 +1,8 @@
 package ch.sourcepond.paxcdi.nonosgi;
 
 import static com.google.common.collect.HashMultimap.create;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.osgi.framework.Constants.OBJECTCLASS;
 import static org.osgi.framework.FrameworkUtil.createFilter;
 
 import java.lang.reflect.Type;
@@ -15,6 +17,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 import org.ops4j.pax.cdi.api.OsgiService;
 import org.ops4j.pax.cdi.api.Properties;
 import org.ops4j.pax.cdi.api.Property;
+import org.osgi.framework.Constants;
 import org.osgi.framework.Filter;
 import org.osgi.framework.InvalidSyntaxException;
 
@@ -33,8 +36,8 @@ final class DefaultComponentRegistry implements ComponentRegistry {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#addComponent(javax.
-	 * enterprise.inject.spi.Bean, org.ops4j.pax.cdi.api.Properties)
+	 * ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#addComponent(
+	 * javax. enterprise.inject.spi.Bean, org.ops4j.pax.cdi.api.Properties)
 	 */
 	@Override
 	public <T> void addComponent(final Bean<T> pComponent, final Properties pPropertiesOrNull) {
@@ -45,21 +48,33 @@ final class DefaultComponentRegistry implements ComponentRegistry {
 			}
 		}
 		for (final Type type : pComponent.getTypes()) {
-			components.put(type, new ComponentDescriptor(pComponent, properties));
+			final Class<?> cl = (Class<?>) type;
+			properties.put(OBJECTCLASS, cl.getName());
+			components.put(type, new ComponentDescriptor(pComponent, new HashMap<>(properties)));
 		}
+	}
+
+	private String toFilter(final String pFilter, final Class<?> pType) {
+		final StringBuilder builder = new StringBuilder().append("(").append(Constants.OBJECTCLASS).append("=")
+				.append(pType.getName()).append(")");
+		if (!isEmpty(pFilter)) {
+			builder.insert(0, "(&").append(")(&").append("(").append(pFilter).append("))");
+		}
+		return builder.toString();
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#addDependency(javax.
-	 * enterprise.inject.spi.InjectionPoint)
+	 * ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#addDependency(
+	 * javax. enterprise.inject.spi.InjectionPoint)
 	 */
 	@Override
 	public void addDependency(final OsgiService pService, final InjectionPoint pIp) {
 		try {
-			dependencies.add(new DependencyDescriptor(createFilter(pService.filter()), pIp));
+			dependencies.add(
+					new DependencyDescriptor(createFilter(toFilter(pService.filter(), (Class<?>) pIp.getType())), pIp));
 		} catch (final InvalidSyntaxException e) {
 			exceptions.add(e);
 		}
@@ -82,9 +97,8 @@ final class DefaultComponentRegistry implements ComponentRegistry {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#resolveDependencies(
-	 * )
+	 * @see ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#
+	 * resolveDependencies( )
 	 */
 	@Override
 	public Collection<Bean<?>> resolveDependencies() {
@@ -104,7 +118,8 @@ final class DefaultComponentRegistry implements ComponentRegistry {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#getExceptions()
+	 * @see
+	 * ch.sourcepond.paxcdi.nonosgi.registry.ComponentRegistry#getExceptions()
 	 */
 	@Override
 	public Collection<Exception> getExceptions() {
