@@ -6,6 +6,7 @@ import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.Bean;
 import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.inject.spi.BeforeBeanDiscovery;
 import javax.enterprise.inject.spi.Extension;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.enterprise.inject.spi.ProcessBean;
@@ -36,6 +37,14 @@ public class NonOsgiExtension implements Extension {
 	 */
 	NonOsgiExtension(final ComponentRegistry pRegistry) {
 		registry = pRegistry;
+	}
+
+	/**
+	 * @param bbd
+	 */
+	public void beforeBeanDiscovery(@Observes final BeforeBeanDiscovery bbd) {
+		bbd.addQualifier(OsgiService.class);
+		bbd.addQualifier(OsgiServiceProvider.class);
 	}
 
 	/**
