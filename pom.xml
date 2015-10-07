@@ -24,20 +24,13 @@
 	<inceptionYear>2015</inceptionYear>
 	<packaging>jar</packaging>
 	<description>
-		CDI extension to use OSGi/Pax-cdi bundles in non-OSGi environments.
+		Very simple CDI extension to use OSGi/Pax-cdi bundles in non-OSGi environments.
+		Basically it replaces @OsgiServiceProvier annotations through @Singleton and removes @OsgiService
+		from injection points. The extension does not consider any OSGi filter.
 	</description>
-
-	<properties>
-		<version.mdcwrapper-api>1.0.0-SNAPSHOT</version.mdcwrapper-api>
-	</properties>
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>ch.sourcepond.utils</groupId>
-				<artifactId>mdcwrapper-api</artifactId>
-				<version>${version.mdcwrapper-api}</version>
-			</dependency>
 			<dependency>
 				<groupId>org.ops4j.pax.cdi</groupId>
 				<artifactId>pax-cdi-openwebbeans</artifactId>
