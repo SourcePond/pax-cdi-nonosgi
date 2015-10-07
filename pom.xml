@@ -20,13 +20,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.sourcepond.cdi</groupId>
 	<artifactId>pax-cdi-nonosgi</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<inceptionYear>2015</inceptionYear>
 	<packaging>jar</packaging>
 	<description>
 		Very simple CDI extension to use OSGi/Pax-cdi bundles in non-OSGi environments.
 		Basically it replaces @OsgiServiceProvier annotations through @Singleton and removes @OsgiService
-		from injection points. The extension does not consider any OSGi filter.
+		from injection points. Currently, the extension does not consider any OSGi filter or service properties.
 	</description>
 
 	<dependencyManagement>
