@@ -1,0 +1,2 @@
+# Quick Overview
+Very simple CDI extension to use OSGi/Pax-cdi bundles in non-OSGi environments. Basically it replaces @OsgiServiceProvier annotations through @Singleton and removes @OsgiService from injection points. Currently, the extension does not consider any OSGi filter nor service properties.
